@@ -37,7 +37,7 @@ try {
     $mailer->Host = 'smtp.gmail.com'; // Cambia esto a tu servidor SMTP
     $mailer->SMTPAuth = true;
     $mailer->Username = 'acmysistemas@gmail.com'; // Tu correo SMTP
-    $mailer->Password = 'JeAnSaSa1970'; // Tu contraseña SMTP
+    $mailer->Password = 'wpianpmvcpqimzlg'; // Tu contraseña SMTP
     $mailer->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
     $mailer->Port = 587;
 
