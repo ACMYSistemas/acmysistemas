@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Políticas de Privacidad - ACMYSistemas</title>
+    <meta name="description" content="Políticas de privacidad y tratamiento de datos personales de ACMYSistemas.">
+    <link rel="icon" href="img/LogoACMYS.png" type="image/png">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <style>
+        /* --- VARIABLES CSS (IGUALES AL INDEX) --- */
+        :root {
+            --primary-color: #020e42;
+            --secondary-color: #00bcd4;
+            --secondary-glow: #00e5ff;
+            --accent-color: #f8f9fa;
+            --bg-color: #ffffff;
+            --text-color: #4a4a4a;
+            --text-on-dark: #ffffff;
+            --heading-font: 'Space Grotesk', sans-serif;
+            --body-font: 'Plus Jakarta Sans', sans-serif;
+            --transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        body.dark-mode {
+            --primary-color: #e0e0e0;
+            --secondary-color: #00bcd4;
+            --secondary-glow: #00e5ff;
+            --accent-color: #121212;
+            --bg-color: #1a1a1a;
+            --text-color: #b0b0b0;
+            --text-on-dark: #ffffff;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: var(--body-font);
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            line-height: 1.8;
+            transition: background-color 0.5s ease, color 0.5s ease;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: var(--heading-font);
+            color: var(--primary-color);
+            font-weight: 700;
+            transition: color 0.5s ease;
+        }
+
+        a { text-decoration: none; color: inherit; transition: var(--transition); }
+        ul { list-style: none; }
+        img { max-width: 100%; height: auto; display: block; }
+
+        .container {
+            width: 90%;
+            max-width: 1000px; /* Un poco más angosto para lectura cómoda */
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* --- Header (Igual al index) --- */
+        header {
+            background-color: rgba(2, 14, 66, 0.95);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            color: var(--text-on-dark);
+            padding: 15px 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+        body.dark-mode header { background-color: rgba(10, 10, 15, 0.95); }
+
+        .nav-container { display: flex; justify-content: space-between; align-items: center; }
+        .logo-group { display: flex; align-items: center; gap: 12px; }
+        header video { height: 45px; border-radius: 8px; }
+        header h1 { color: #ffffff !important; font-size: 1.6rem; margin: 0; letter-spacing: -0.5px; }
+
+        nav { display: flex; align-items: center; gap: 30px;}
+        nav ul { display: flex; gap: 30px; align-items: center; margin:0;}
+        /* LOS ENLACES APUNTAN AL INDEX.HTML */
+        nav a { font-weight: 500; font-size: 0.95rem; position: relative; color: #ffffff; }
+        nav a:hover { color: var(--secondary-color); }
+
+        .theme-switch {
+            background: rgba(255, 255, 255, 0.1);
+            border: none; color: #fff; font-size: 1.2rem;
+            width: 40px; height: 40px; border-radius: 50%;
+            cursor: pointer; display: flex; align-items: center; justify-content: center;
+            transition: var(--transition);
+        }
+        .theme-switch:hover { background: var(--secondary-color); color: #020e42; transform: rotate(15deg); }
+
+        /* --- Header de la Página Legal --- */
+        .page-header {
+            background-color: var(--primary-color);
+            padding: 150px 0 60px;
+            text-align: center;
+        }
+        body.dark-mode .page-header { background-color: #0a0a0f; border-bottom: 1px solid #333; }
+        .page-header h1 { color: #ffffff !important; font-size: 3rem; margin-bottom: 15px; }
+        .page-header p { color: var(--secondary-color); font-size: 1.1rem; }
+
+        /* --- Contenido de las Políticas --- */
+        .policy-content {
+            padding: 80px 0;
+        }
+        .policy-content h2 {
+            font-size: 1.8rem;
+            margin-top: 40px;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--accent-color);
+        }
+        .policy-content p {
+            margin-bottom: 20px;
+            font-size: 1.05rem;
+        }
+        .policy-content ul {
+            list-style-type: disc;
+            margin-left: 20px;
+            margin-bottom: 20px;
+        }
+        .policy-content li {
+            margin-bottom: 10px;
+            font-size: 1.05rem;
+        }
+
+        /* --- Footer (Igual al index) --- */
+        footer { background-color: #020e42; color: #ffffff; padding: 80px 0 30px; margin-top: 50px; }
+        body.dark-mode footer { background-color: #0a0a0f; }
+        .footer-content { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 50px; margin-bottom: 50px; }
+        footer h4 { color: #ffffff !important; margin-bottom: 25px; font-size: 1.3rem; position: relative; padding-bottom: 10px; }
+        footer h4::after {
+            content: ''; position: absolute; left: 0; bottom: 0;
+            width: 40px; height: 3px; background-color: var(--secondary-color); border-radius: 2px;
+        }
+        footer p, footer li { font-size: 0.95rem; color: #a0aec0; margin-bottom: 15px; }
+        footer li a { display: inline-block; color: #a0aec0; transition: var(--transition); }
+        footer li a:hover { color: var(--secondary-color); transform: translateX(5px); }
+        
+        .social-links { display: flex; gap: 15px; margin-top: 20px; }
+        .social-links a {
+            display: flex; align-items: center; justify-content: center;
+            width: 40px; height: 40px; background-color: rgba(255,255,255,0.05); border-radius: 50%;
+            color: #ffffff; transition: var(--transition);
+        }
+        .social-links a:hover { background-color: var(--secondary-color); color: #020e42; transform: translateY(-3px); }
+        
+        .footer-gallery { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+        .footer-gallery img { width: 100%; aspect-ratio: 1 / 1; object-fit: cover; border-radius: 6px; filter: grayscale(50%); transition: var(--transition); }
+        .footer-gallery:hover img { filter: brightness(0.5) grayscale(100%); }
+        .footer-gallery img:hover { filter: brightness(1.1) grayscale(0%); transform: scale(1.05); z-index: 10; position: relative; }
+
+        .copyright { text-align: center; font-size: 0.9rem; color: #a0aec0; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 30px; }
+        .copyright a { color: #ffffff; font-weight: 600; }
+
+        @media (max-width: 992px) {
+            .footer-content { grid-template-columns: 1fr 1fr; }
+            nav ul { display: none; }
+        }
+        @media (max-width: 768px) {
+            .footer-content { grid-template-columns: 1fr; }
+            .page-header h1 { font-size: 2.2rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="container nav-container">
+            <div class="logo-group">
+                <a href="index.html" style="display:flex; align-items:center; gap:12px;">
+                    <video autoplay loop muted playsinline>
+                        <source src="img/LogoACMYVideoOK.mp4" type="video/mp4">
+                    </video>
+                    <h1>ACMYSistemas</h1>
+                </a>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="index.html#hero">Inicio</a></li>
+                    <li><a href="index.html#about">Nosotros</a></li>
+                    <li><a href="index.html#services">Servicios</a></li>
+                    <li><a href="index.html#projects">Proyectos</a></li>
+                    <li><a href="index.html#contact">Contacto</a></li>
+                </ul>
+                <button class="theme-switch" id="theme-toggle" aria-label="Cambiar modo oscuro">
+                    <i class="fas fa-moon"></i>
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <div class="page-header">
+        <div class="container">
+            <h1>Políticas de Privacidad</h1>
+            <p>Última actualización: Abril de 2026</p>
+        </div>
+    </div>
+
+    <section class="policy-content">
+        <div class="container">
+            <p>En <strong>ACMYSistemas</strong>, valoramos su privacidad y nos comprometemos a proteger sus datos personales. Esta Política de Privacidad explica cómo recopilamos, usamos, divulgamos y salvaguardamos su información cuando visita nuestro sitio web o utiliza nuestros servicios de desarrollo de software y aplicaciones móviles.</p>
+
+            <h2>1. Información que Recopilamos</h2>
+            <p>Podemos recopilar información sobre usted de varias maneras, incluyendo:</p>
+            <ul>
+                <li><strong>Datos Personales:</strong> Información de identificación personal, como su nombre, dirección de correo electrónico, número de teléfono (ej. WhatsApp) y detalles de la empresa, que usted nos proporciona voluntariamente al contactarnos para solicitar nuestros servicios.</li>
+                <li><strong>Datos de Navegación:</strong> Información que nuestros servidores recopilan automáticamente cuando accede a nuestro sitio, como su dirección IP, tipo de navegador, sistema operativo y tiempos de acceso.</li>
+            </ul>
+
+            <h2>2. Uso de la Información</h2>
+            <p>Tener información precisa sobre usted nos permite brindarle una experiencia fluida, eficiente y personalizada. Específicamente, podemos utilizar la información recopilada para:</p>
+            <ul>
+                <li>Responder a sus consultas, cotizaciones y brindar servicio al cliente.</li>
+                <li>Proporcionar, operar y mantener nuestros servicios de desarrollo de software y diseño web.</li>
+                <li>Enviarle información administrativa, como cambios en nuestros términos, condiciones y políticas.</li>
+                <li>Mejorar nuestro sitio web y nuestras estrategias de marketing digital.</li>
+            </ul>
+
+            <h2>3. Divulgación de la Información</h2>
+            <p>En ACMYSistemas <strong>no vendemos, comercializamos ni alquilamos</strong> su información de identificación personal a terceros. Podemos compartir información con proveedores de servicios de confianza (como servicios de hosting) que nos asisten en la operación de nuestro sitio web, siempre y cuando estas partes acuerden mantener esta información confidencial.</p>
+
+            <h2>4. Seguridad de los Datos</h2>
+            <p>Utilizamos medidas de seguridad administrativas, técnicas y físicas (como certificados SSL) para ayudar a proteger su información personal. Si bien hemos tomado medidas razonables para asegurar la información personal que nos proporciona, tenga en cuenta que a pesar de nuestros esfuerzos, ninguna medida de seguridad es perfecta o impenetrable.</p>
+
+            <h2>5. Derechos del Titular (Ley Colombiana)</h2>
+            <p>De acuerdo con la legislación vigente en Colombia (Ley 1581 de 2012), usted tiene derecho a conocer, actualizar y rectificar sus datos personales frente a ACMYSistemas. También puede solicitar la eliminación de sus datos de nuestras bases de contacto en cualquier momento enviándonos un correo electrónico.</p>
+
+            <h2>6. Cambios a esta Política</h2>
+            <p>Nos reservamos el derecho de realizar cambios a esta Política de Privacidad en cualquier momento y por cualquier motivo. Le avisaremos sobre cualquier cambio actualizando la fecha de "Última actualización" de esta Política. Le recomendamos revisar esta página periódicamente para mantenerse informado.</p>
+
+            <h2>7. Contacto</h2>
+            <p>Si tiene preguntas o comentarios sobre esta Política de Privacidad, comuníquese con nosotros en:</p>
+            <ul>
+                <li><strong>ACMYSistemas</strong></li>
+                <li>Girardot - Cundinamarca, Colombia</li>
+                <li>Teléfono / WhatsApp: +57 313 480 72 12</li>
+                <li>Correo Electrónico: acmysistemas@gmail.com</li>
+            </ul>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container footer-content">
+            <div class="footer-info">
+                <h4>Hablemos</h4>
+                <p><i class="fas fa-map-marker-alt" style="margin-right: 10px; color: var(--secondary-color);"></i> Girardot - Cundinamarca</p>
+                <p><i class="fas fa-phone-alt" style="margin-right: 10px; color: var(--secondary-color);"></i> +57 313 480 72 12</p>
+                <p><i class="fas fa-envelope" style="margin-right: 10px; color: var(--secondary-color);"></i> acmysistemas@gmail.com</p>
+                <div class="social-links">
+                    <a href="https://x.com/acmy_sistemas" target="_blank"><i class="fab fa-twitter"></i></a>
+                    <a href="https://www.facebook.com/AcmySistemas" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://www.instagram.com/acmysistemasdesarrollo/" target="_blank"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+            <div class="footer-links">
+                <h4>Enlaces Rápidos</h4>
+                <ul>
+                    <li><a href="index.html#hero"><i class="fas fa-angle-right" style="margin-right: 5px;"></i> Inicio</a></li>
+                    <li><a href="index.html#about"><i class="fas fa-angle-right" style="margin-right: 5px;"></i> Nuestra Empresa</a></li>
+                    <li><a href="index.html#services"><i class="fas fa-angle-right" style="margin-right: 5px;"></i> Servicios</a></li>
+                    <li><a href="politicas.html"><i class="fas fa-angle-right" style="margin-right: 5px;"></i> Políticas de Privacidad</a></li>
+                    <li><a href="https://www.app-privacy-policy.com/live.php?token=luPY5kURy5GBJgIXliy6faIKGR4cUPAu" target="_blank"><i class="fas fa-angle-right" style="margin-right: 5px;"></i> Términos y Condiciones</a></li>
+                </ul>
+            </div>
+            <div class="footer-projects">
+                <h4>Portafolio Reciente</h4>
+                <div class="footer-gallery">
+                    <img src="img/p1.avif" alt="P1" loading="lazy">
+                    <img src="img/p2.avif" alt="P2" loading="lazy">
+                    <img src="img/p3.avif" alt="P3" loading="lazy">
+                    <img src="img/p4.avif" alt="P4" loading="lazy">
+                    <img src="img/p5.avif" alt="P5" loading="lazy">
+                    <img src="img/p6.avif" alt="P6" loading="lazy">
+                    <img src="img/p7.avif" alt="P7" loading="lazy">
+                    <img src="img/p8.avif" alt="P8" loading="lazy">
+                    <img src="img/p9.avif" alt="P9" loading="lazy">
+                </div>
+            </div>
+        </div>
+        <div class="container copyright">
+            <p>&copy; 2026 <a href="https://acmysistemas.github.io/acmysistemas/">ACMYSistemas</a>. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <script>
+        const themeToggleBtn = document.getElementById('theme-toggle');
+        const themeIcon = themeToggleBtn.querySelector('i');
+        const body = document.body;
+
+        if (localStorage.getItem('dark-mode') === 'enabled') {
+            body.classList.add('dark-mode');
+            themeIcon.classList.remove('fa-moon');
+            themeIcon.classList.add('fa-sun');
+        }
+
+        themeToggleBtn.addEventListener('click', () => {
+            body.classList.toggle('dark-mode');
+            
+            if (body.classList.contains('dark-mode')) {
+                localStorage.setItem('dark-mode', 'enabled');
+                themeIcon.classList.remove('fa-moon');
+                themeIcon.classList.add('fa-sun');
+            } else {
+                localStorage.setItem('dark-mode', 'disabled');
+                themeIcon.classList.remove('fa-sun');
+                themeIcon.classList.add('fa-moon');
+            }
+        });
+    </script>
+</body>
+</html>
