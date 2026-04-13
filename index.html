@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ACMYSistemas - Soluciones Tecnológicas</title>
+    <meta name="description" content="ACMYSistemas: Líderes en desarrollo de software, aplicaciones móviles, diseño web y marketing digital en Girardot.">
+    <link rel="icon" href="img/LogoACMYS.png" type="image/png">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <style>
+        /* --- VARIABLES CSS (PALETA DE COLORES Y FUENTES) --- */
+        :root {
+            --primary-color: #020e42;
+            --secondary-color: #00bcd4;
+            --secondary-glow: #00e5ff;
+            /* Colores Modo Claro (Por Defecto) */
+            --accent-color: #f8f9fa;
+            --bg-color: #ffffff;
+            --text-color: #4a4a4a;
+            --text-on-dark: #ffffff;
+            --card-bg: #ffffff;
+            --border-color: #eee;
+            --feature-bg: rgba(0, 188, 212, 0.1);
+            
+            --heading-font: 'Space Grotesk', sans-serif;
+            --body-font: 'Plus Jakarta Sans', sans-serif;
+            --transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        /* --- VARIABLES MODO OSCURO --- */
+        body.dark-mode {
+            --primary-color: #e0e0e0; /* Títulos más claros en modo oscuro */
+            --secondary-color: #00bcd4;
+            --secondary-glow: #00e5ff;
+            --accent-color: #121212; /* Fondo secciones oscuro */
+            --bg-color: #1a1a1a;     /* Fondo general oscuro */
+            --text-color: #b0b0b0;   /* Texto general más claro */
+            --text-on-dark: #ffffff;
+            --card-bg: #242424;      /* Fondo de tarjetas oscuro */
+            --border-color: #333;
+            --feature-bg: rgba(0, 188, 212, 0.2);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: var(--body-font);
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            line-height: 1.6;
+            scroll-behavior: smooth;
+            transition: background-color 0.5s ease, color 0.5s ease;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: var(--heading-font);
+            color: var(--primary-color);
+            font-weight: 700;
+            transition: color 0.5s ease;
+        }
+
+        a { text-decoration: none; color: inherit; transition: var(--transition); }
+        ul { list-style: none; }
+        img { max-width: 100%; height: auto; display: block; }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        section { padding: 100px 0; overflow-x: hidden; transition: background-color 0.5s ease; }
+
+        /* --- Barra de Progreso de Scroll --- */
+        .scroll-progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 3px;
+            background: linear-gradient(to right, var(--secondary-color), var(--secondary-glow));
+            width: 0%;
+            z-index: 1001; /* Sobre el header */
+            transition: width 0.1s ease-out;
+        }
+
+        /* --- Animaciones de Scroll (Aparición) --- */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.8s ease-out;
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* --- Botones --- */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 14px 35px;
+            border-radius: 50px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: var(--transition);
+            border: 2px solid transparent;
+        }
+
+        .btn-primary {
+            background: linear-gradient(45deg, var(--secondary-color), var(--secondary-glow));
+            color: #020e42; /* Siempre oscuro para contraste */
+            box-shadow: 0 4px 15px rgba(0, 188, 212, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0, 188, 212, 0.5);
+            color: #020e42;
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            color: var(--text-on-dark);
+            border: 2px solid var(--text-on-dark);
+        }
+
+        .btn-outline:hover {
+            background-color: var(--text-on-dark);
+            color: #020e42;
+            transform: translateY(-3px);
+        }
+
+        /* --- Header --- */
+        header {
+            background-color: rgba(2, 14, 66, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            color: var(--text-on-dark);
+            padding: 15px 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+        /* Ajuste header modo oscuro */
+        body.dark-mode header {
+            background-color: rgba(10, 10, 15, 0.85);
+        }
+
+        .nav-container { display: flex; justify-content: space-between; align-items: center; }
+        .logo-group { display: flex; align-items: center; gap: 12px; }
+        header video { height: 45px; border-radius: 8px; }
+        /* Forzar título blanco en el header en ambos modos */
+        header h1 { color: #ffffff !important; font-size: 1.6rem; margin: 0; letter-spacing: -0.5px; }
+
+        nav { display: flex; align-items: center; gap: 30px;}
+        nav ul { display: flex; gap: 30px; align-items: center; margin:0;}
+        nav a { font-weight: 500; font-size: 0.95rem; position: relative; color: #ffffff; }
+        nav a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background-color: var(--secondary-color);
+            transition: var(--transition);
+        }
+        nav a:hover::after { width: 100%; }
+        nav a:hover { color: var(--secondary-color); }
+
+        /* --- Botón Toggle Modo Oscuro --- */
+        .theme-switch {
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            color: #fff;
+            font-size: 1.2rem;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+        }
+        .theme-switch:hover {
+            background: var(--secondary-color);
+            color: #020e42;
+            transform: rotate(15deg);
+        }
+
+        /* --- Hero --- */
+        #hero {
+            background-color: #020e42; /* Fallback */
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            text-align: center;
+            padding-top: 80px;
+            background-image: 
+                linear-gradient(rgba(2, 14, 66, 0.85), rgba(2, 14, 66, 0.98)), 
+                url('img/hero.png');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+        /* Ajuste Hero Modo Oscuro */
+        body.dark-mode #hero {
+             background-image: 
+                linear-gradient(rgba(10, 10, 15, 0.9), rgba(10, 10, 15, 0.98)), 
+                url('img/hero.png');
+        }
+
+        /* Forzar títulos blancos en el hero */
+        #hero h2 { font-size: 4.5rem; color: #ffffff !important; margin-bottom: 20px; line-height: 1.1; }
+        #hero h2 span { color: var(--secondary-color) !important; }
+        #hero p { font-size: 1.25rem; color: #d1d5db; max-width: 700px; margin: 0 auto 40px; }
+        #hero .btn-group { display: flex; gap: 20px; justify-content: center; }
+
+        /* --- Títulos --- */
+        .section-title { text-align: center; margin-bottom: 70px; }
+        .section-subtitle {
+            color: var(--secondary-color);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-size: 0.9rem;
+            display: block;
+            margin-bottom: 10px;
+        }
+        .section-title h3 { font-size: 3rem; color: var(--primary-color); }
+
+        /* --- Nosotros --- */
+        #about { background-color: var(--accent-color); }
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+        .about-image img {
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+        body.dark-mode .about-image img { box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5); }
+        
+        .about-text p { font-size: 1.1rem; margin-bottom: 30px; }
+        .features { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        .feature {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            font-weight: 600;
+            color: var(--primary-color);
+            transition: color 0.5s ease;
+        }
+        .feature i {
+            color: var(--secondary-color);
+            font-size: 1.2rem;
+            background: var(--feature-bg);
+            padding: 10px;
+            border-radius: 50%;
+            transition: background 0.5s ease;
+        }
+
+        /* --- Servicios --- */
+        #services { background-color: var(--bg-color); }
+        .services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; }
+        .service-card {
+            background-color: var(--card-bg);
+            padding: 40px 30px;
+            border-radius: 15px;
+            text-align: center;
+            transition: var(--transition);
+            border: 1px solid var(--border-color);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.02);
+        }
+        .service-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--secondary-color);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+        body.dark-mode .service-card:hover { box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4); }
+
+        .service-icon-wrap {
+            width: 80px; height: 80px; margin: 0 auto 25px;
+            background: linear-gradient(135deg, #020e42, #0a217a); /* Siempre azul oscuro por diseño */
+            border-radius: 20px; display: flex; align-items: center; justify-content: center;
+            transform: rotate(-5deg); transition: var(--transition);
+        }
+        .service-card:hover .service-icon-wrap {
+            transform: rotate(0deg) scale(1.1);
+            background: linear-gradient(135deg, var(--secondary-color), var(--secondary-glow));
+        }
+        .service-icon-wrap i { font-size: 2rem; color: #ffffff; }
+        .service-card h4 { margin-bottom: 15px; font-size: 1.3rem; }
+        .service-card p { color: var(--text-color); font-size: 0.95rem; }
+
+        /* --- Proyectos --- */
+        #projects { background-color: var(--accent-color); }
+        .projects-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 25px; }
+        .project-item {
+            position: relative;
+            border-radius: 15px;
+            overflow: hidden;
+            cursor: pointer;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+            aspect-ratio: 4/3; /* Mantiene proporciones consistentes */
+        }
+        .project-item img {
+            width: 100%; height: 100%; object-fit: cover;
+            transition: transform 0.6s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+        .project-overlay {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(to top, rgba(2, 14, 66, 0.95), rgba(2, 14, 66, 0.3));
+            display: flex; flex-direction: column;
+            justify-content: flex-end; align-items: flex-start; padding: 30px;
+            opacity: 0; transition: var(--transition);
+        }
+        .project-item:hover img { transform: scale(1.08); }
+        .project-item:hover .project-overlay { opacity: 1; }
+        .project-overlay h4 {
+            color: #ffffff !important; margin-bottom: 5px; font-size: 1.2rem;
+            transform: translateY(20px); transition: var(--transition);
+        }
+        .project-overlay p {
+            color: var(--secondary-color); font-size: 0.9rem; font-weight: 500;
+            transform: translateY(20px); transition: var(--transition); transition-delay: 0.1s;
+        }
+        .project-item:hover .project-overlay h4,
+        .project-item:hover .project-overlay p { transform: translateY(0); }
+
+        /* --- Footer --- */
+        footer { 
+            background-color: #020e42; /* Footer siempre oscuro */
+            color: #ffffff; 
+            padding: 80px 0 30px; 
+        }
+        body.dark-mode footer { background-color: #0a0a0f; }
+
+        .footer-content { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 50px; margin-bottom: 50px; }
+        footer h4 { color: #ffffff !important; margin-bottom: 25px; font-size: 1.3rem; position: relative; padding-bottom: 10px; }
+        footer h4::after {
+            content: ''; position: absolute; left: 0; bottom: 0;
+            width: 40px; height: 3px; background-color: var(--secondary-color); border-radius: 2px;
+        }
+        footer p, footer li { font-size: 0.95rem; color: #a0aec0; margin-bottom: 15px; }
+        footer li a { display: inline-block; color: #a0aec0; transition: var(--transition); }
+        footer li a:hover { color: var(--secondary-color); transform: translateX(5px); }
+        
+        .social-links { display: flex; gap: 15px; margin-top: 20px; }
+        .social-links a {
+            display: flex; align-items: center; justify-content: center;
+            width: 40px; height: 40px; background-color: rgba(255,255,255,0.05); border-radius: 50%;
+            color: #ffffff; transition: var(--transition);
+        }
+        .social-links a:hover {
+            background-color: var(--secondary-color); color: #020e42; transform: translateY(-3px);
+        }
+        
+        /* Galería Footer */
+        .footer-gallery { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+        .footer-gallery img {
+            width: 100%; aspect-ratio: 1 / 1; object-fit: cover; border-radius: 6px;
+            transition: var(--transition); cursor: pointer; filter: grayscale(50%);
+        }
+        .footer-gallery:hover img { filter: brightness(0.5) grayscale(100%); }
+        .footer-gallery img:hover { filter: brightness(1.1) grayscale(0%); transform: scale(1.05); z-index: 10; position: relative; }
+
+        .copyright {
+            text-align: center; font-size: 0.9rem; color: #a0aec0;
+            border-top: 1px solid rgba(255,255,255,0.1); padding-top: 30px;
+        }
+        .copyright a { color: #ffffff; font-weight: 600; }
+
+        /* --- Botón WhatsApp Flotante --- */
+        .whatsapp-float {
+            position: fixed; width: 60px; height: 60px; bottom: 40px; right: 40px;
+            background-color: #25d366; color: #FFF; border-radius: 50px; text-align: center; font-size: 30px;
+            box-shadow: 0 5px 15px rgba(37, 211, 102, 0.4); z-index: 100;
+            display: flex; align-items: center; justify-content: center; transition: var(--transition);
+        }
+        .whatsapp-float:hover { transform: scale(1.1); box-shadow: 0 8px 20px rgba(37, 211, 102, 0.6); color: #FFF; }
+
+        /* --- Responsive --- */
+        @media (max-width: 992px) {
+            #hero h2 { font-size: 3.5rem; }
+            .about-content { grid-template-columns: 1fr; }
+            .services-grid { grid-template-columns: repeat(2, 1fr); }
+            .projects-grid { grid-template-columns: repeat(2, 1fr); }
+            .footer-content { grid-template-columns: 1fr 1fr; }
+            nav ul { display: none; } /* Ocultar enlaces de texto en tablet/móvil */
+        }
+
+        @media (max-width: 768px) {
+            #hero h2 { font-size: 2.8rem; }
+            .services-grid { grid-template-columns: 1fr; }
+            .projects-grid { grid-template-columns: 1fr; }
+            .footer-content { grid-template-columns: 1fr; }
+            #hero .btn-group { flex-direction: column; }
+            .whatsapp-float { bottom: 20px; right: 20px; width: 50px; height: 50px; font-size: 25px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="scroll-progress-bar" id="scrollBar"></div>
+
+    <header>
+        <div class="container nav-container">
+            <div class="logo-group">
+                <video autoplay loop muted playsinline>
+                    <source src="img/LogoACMYVideoOK.mp4" type="video/mp4">
+                </video>
+                <h1>ACMYSistemas</h1>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#hero">Inicio</a></li>
+                    <li><a href="#about">Nosotros</a></li>
+                    <li><a href="#services">Servicios</a></li>
+                    <li><a href="#projects">Proyectos</a></li>
+                    <li><a href="#contact">Contacto</a></li>
+                </ul>
+                <button class="theme-switch" id="theme-toggle" aria-label="Cambiar modo oscuro">
+                    <i class="fas fa-moon"></i>
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <section id="hero">
+        <div class="container reveal">
+            <h2>Tecnología que impulsa <br><span>tu crecimiento</span></h2>
+            <p>Convertimos tus ideas en experiencias digitales excepcionales con soluciones de software y desarrollo web de vanguardia.</p>
+            <div class="btn-group">
+                <a href="#projects" class="btn btn-primary">Ver Proyectos</a>
+                <a href="#contact" class="btn btn-outline">Hablar con un Asesor</a>
+            </div>
+        </div>
+    </section>
+
+    <section id="about">
+        <div class="container">
+            <div class="about-content reveal">
+                <div class="about-text">
+                    <span class="section-subtitle">Quiénes Somos</span>
+                    <h3 style="font-size: 2.5rem; margin-bottom: 20px;">Innovación Digital a tu Alcance</h3>
+                    <p>Nacimos para potenciar tu negocio a través de la tecnología. Fusionamos creatividad, experiencia técnica y pasión por la calidad para entregar productos digitales de alto impacto que impulsan tu éxito empresarial en el mundo moderno.</p>
+                    <div class="features">
+                        <div class="feature"><i class="fas fa-code"></i> Arquitectura a Medida</div>
+                        <div class="feature"><i class="fas fa-users"></i> Equipo Experto</div>
+                        <div class="feature"><i class="fas fa-headset"></i> Soporte Estratégico</div>
+                        <div class="feature"><i class="fas fa-chart-line"></i> Alto Rendimiento</div>
+                    </div>
+                </div>
+                <div class="about-image">
+                    <img src="img/about.png" alt="Equipo ACMYSistemas Trabajando">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="services">
+        <div class="container">
+            <div class="section-title reveal">
+                <span class="section-subtitle">Especialidades</span>
+                <h3>Soluciones Integrales</h3>
+            </div>
+            <div class="services-grid">
+                <div class="service-card reveal">
+                    <div class="service-icon-wrap"><i class="fas fa-file-code"></i></div>
+                    <h4>Desarrollo de Software</h4>
+                    <p>Creamos sistemas robustos y escalables para optimizar y automatizar tus procesos operativos.</p>
+                </div>
+                <div class="service-card reveal">
+                    <div class="service-icon-wrap"><i class="fas fa-laptop-code"></i></div>
+                    <h4>Diseño Web</h4>
+                    <p>Sitios dinámicos, rápidos y atractivos que reflejan la identidad de tu marca perfectamente.</p>
+                </div>
+                <div class="service-card reveal">
+                    <div class="service-icon-wrap"><i class="fab fa-android"></i></div>
+                    <h4>Desarrollo Móvil</h4>
+                    <p>Aplicaciones nativas e híbridas intuitivas para iOS y Android que conectan a tus usuarios.</p>
+                </div>
+                <div class="service-card reveal">
+                    <div class="service-icon-wrap"><i class="fas fa-bullhorn"></i></div>
+                    <h4>Marketing Digital</h4>
+                    <p>Estrategias digitales que alinean objetivos comerciales y aprovechan oportunidades.</p>
+                </div>
+                <div class="service-card reveal">
+                    <div class="service-icon-wrap"><i class="fas fa-vector-square"></i></div>
+                    <h4>Diseño UX/UI</h4>
+                    <p>Productos funcionales, estéticamente atractivos y diseñados centrados en el usuario.</p>
+                </div>
+                <div class="service-card reveal">
+                    <div class="service-icon-wrap"><i class="fas fa-lightbulb"></i></div>
+                    <h4>Consultoría IT</h4>
+                    <p>Asesoramiento especializado en tendencias y herramientas para estrategias efectivas.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="projects">
+        <div class="container">
+            <div class="section-title reveal">
+                <span class="section-subtitle">Casos de Éxito</span>
+                <h3>Nuestra Galería</h3>
+            </div>
+            <div class="projects-grid">
+                <div class="project-item reveal">
+                    <img src="img/p1.avif" alt="Facturación" loading="lazy">
+                    <div class="project-overlay">
+                        <h4>Software de Facturación</h4>
+                        <p>Gestión Web Empresarial</p>
+                    </div>
+                </div>
+                <div class="project-item reveal">
+                    <img src="img/p2.avif" alt="Optometría" loading="lazy">
+                    <div class="project-overlay">
+                        <h4>Clínica de Optometría</h4>
+                        <p>Sistema de Salud Visual</p>
+                    </div>
+                </div>
+                <div class="project-item reveal">
+                    <img src="img/p3.avif" alt="Consultorio Médico" loading="lazy">
+                    <div class="project-overlay">
+                        <h4>Consultorio Médico</h4>
+                        <p>Gestión de Citas y Pacientes</p>
+                    </div>
+                </div>
+                <div class="project-item reveal">
+                    <img src="img/p4.avif" alt="Dermatología" loading="lazy">
+                    <div class="project-overlay">
+                        <h4>Centro Dermatológico</h4>
+                        <p>Historias Clínicas Especializadas</p>
+                    </div>
+                </div>
+                <div class="project-item reveal">
+                    <img src="img/p5.avif" alt="Odontología" loading="lazy">
+                    <div class="project-overlay">
+                        <h4>Clínica Odontológica</h4>
+                        <p>Odontogramas Digitales</p>
+                    </div>
+                </div>
+                <div class="project-item reveal">
+                    <img src="img/p6.avif" alt="Salud Ocupacional" loading="lazy">
+                    <div class="project-overlay">
+                        <h4>Salud Ocupacional</h4>
+                        <p>Evaluaciones Médicas Laborales</p>
+                    </div>
+                </div>
+                <div class="project-item reveal">
+                    <img src="img/p7.avif" alt="Fonoaudiología" loading="lazy">
+                    <div class="project-overlay">
+                        <h4>Fonoaudiología</h4>
+                        <p>Seguimiento Terapéutico</p>
+                    </div>
+                </div>
+                <div class="project-item reveal">
+                    <img src="img/p8.avif" alt="Desarrollo App" loading="lazy">
+                    <div class="project-overlay">
+                        <h4>Aplicación Corporativa</h4>
+                        <p>App Móvil Nativa</p>
+                    </div>
+                </div>
+                <div class="project-item reveal">
+                    <img src="img/p9.avif" alt="App Entregas" loading="lazy">
+                    <div class="project-overlay">
+                        <h4>App de Entregas</h4>
+                        <p>Logística y Delivery en Tiempo Real</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer id="contact">
+        <div class="container footer-content reveal">
+            <div class="footer-info">
+                <h4>Hablemos</h4>
+                <p><i class="fas fa-map-marker-alt" style="margin-right: 10px; color: var(--secondary-color);"></i> Girardot - Cundinamarca</p>
+                <p><i class="fas fa-phone-alt" style="margin-right: 10px; color: var(--secondary-color);"></i> +57 313 480 72 12</p>
+                <p><i class="fas fa-envelope" style="margin-right: 10px; color: var(--secondary-color);"></i> acmysistemas@gmail.com</p>
+                <div class="social-links">
+                    <a href="https://x.com/acmy_sistemas" target="_blank"><i class="fab fa-twitter"></i></a>
+                    <a href="https://www.facebook.com/AcmySistemas" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://www.instagram.com/acmysistemasdesarrollo/" target="_blank"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+            <div class="footer-links">
+                <h4>Enlaces Rápidos</h4>
+                <ul>
+                    <li><a href="#hero"><i class="fas fa-angle-right" style="margin-right: 5px;"></i> Inicio</a></li>
+                    <li><a href="#about"><i class="fas fa-angle-right" style="margin-right: 5px;"></i> Nuestra Empresa</a></li>
+                    <li><a href="#services"><i class="fas fa-angle-right" style="margin-right: 5px;"></i> Servicios</a></li>
+                    <li><a href="https://www.app-privacy-policy.com/live.php?token=Xbs718qTVsdqgK9zwLFXQGRbAd7ZFdK6" target="_blank"><i class="fas fa-angle-right" style="margin-right: 5px;"></i> Políticas de Privacidad</a></li>
+                    <li><a href="https://www.app-privacy-policy.com/live.php?token=luPY5kURy5GBJgIXliy6faIKGR4cUPAu" target="_blank"><i class="fas fa-angle-right" style="margin-right: 5px;"></i> Términos y Condiciones</a></li>
+                </ul>
+            </div>
+            <div class="footer-projects">
+                <h4>Portafolio Reciente</h4>
+                <div class="footer-gallery">
+                    <img src="img/p1.avif" alt="P1" loading="lazy">
+                    <img src="img/p2.avif" alt="P2" loading="lazy">
+                    <img src="img/p3.avif" alt="P3" loading="lazy">
+                    <img src="img/p4.avif" alt="P4" loading="lazy">
+                    <img src="img/p5.avif" alt="P5" loading="lazy">
+                    <img src="img/p6.avif" alt="P6" loading="lazy">
+                    <img src="img/p7.avif" alt="P7" loading="lazy">
+                    <img src="img/p8.avif" alt="P8" loading="lazy">
+                    <img src="img/p9.avif" alt="P9" loading="lazy">
+                </div>
+            </div>
+        </div>
+        <div class="container copyright">
+            <p>&copy; 2026 <a href="https://acmysistemas.github.io/acmysistemas/">ACMYSistemas</a>. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <a href="https://wa.me/573134807212?text=Hola%20ACMYSistemas,%20estoy%20interesado%20en%20sus%20servicios." class="whatsapp-float" target="_blank">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <script>
+        // 1. Lógica del Modo Oscuro
+        const themeToggleBtn = document.getElementById('theme-toggle');
+        const themeIcon = themeToggleBtn.querySelector('i');
+        const body = document.body;
+
+        // Comprobar si hay preferencia guardada
+        if (localStorage.getItem('dark-mode') === 'enabled') {
+            body.classList.add('dark-mode');
+            themeIcon.classList.remove('fa-moon');
+            themeIcon.classList.add('fa-sun');
+        }
+
+        themeToggleBtn.addEventListener('click', () => {
+            body.classList.toggle('dark-mode');
+            
+            if (body.classList.contains('dark-mode')) {
+                localStorage.setItem('dark-mode', 'enabled');
+                themeIcon.classList.remove('fa-moon');
+                themeIcon.classList.add('fa-sun');
+            } else {
+                localStorage.setItem('dark-mode', 'disabled');
+                themeIcon.classList.remove('fa-sun');
+                themeIcon.classList.add('fa-moon');
+            }
+        });
+
+        // 2. Animaciones de Aparición (Scroll Reveal)
+        function reveal() {
+            var reveals = document.querySelectorAll(".reveal");
+            for (var i = 0; i < reveals.length; i++) {
+                var windowHeight = window.innerHeight;
+                var elementTop = reveals[i].getBoundingClientRect().top;
+                var elementVisible = 100;
+                if (elementTop < windowHeight - elementVisible) {
+                    reveals[i].classList.add("active");
+                }
+            }
+        }
+        
+        // 3. Barra de Progreso de Scroll
+        function updateScrollBar() {
+            var winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            var height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            var scrolled = (winScroll / height) * 100;
+            document.getElementById("scrollBar").style.width = scrolled + "%";
+        }
+
+        // Listener consolidado para el scroll
+        window.addEventListener("scroll", () => {
+            reveal();
+            updateScrollBar();
+        });
+
+        // Llamada inicial
+        reveal();
+    </script>
+</body>
+</html>
