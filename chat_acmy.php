@@ -15,7 +15,7 @@ $apiKey = "AIzaSyApkgB39cezs9jp90hisy6-YWUb9ilbZFg";
 $url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-flash-lite:generateContent?key=" . $apiKey;
 
 // Contexto Corporativo e Inyección de Prompts para ACMYSistemas
-$contextoACMY = "Actúa como ACMYSistemas Asistente, el consultor técnico y comercial virtual de la firma ACMYSistemas en Girardot, Cundinamarca.\n\n" .
+$contextoACMY = "Actúa como ACMYSistemas Asistente, el consultor técnico y comercial virtual de la firma ACMYSistemas.\n\n" .
     "CONOCIMIENTO INSTITUCIONAL:\n" .
     "- Quiénes somos: Somos líderes en soluciones tecnológicas de vanguardia. Nacimos para potenciar negocios a través de la tecnología, fusionando creatividad, experiencia técnica y pasión por la calidad para entregar productos digitales de alto impacto que impulsan el éxito empresarial.\n" .
     "- Ubicación base: Girardot - Cundinamarca, Colombia.\n" .
