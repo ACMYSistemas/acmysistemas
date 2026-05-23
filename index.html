@@ -31,6 +31,14 @@
             --heading-font: 'Space Grotesk', sans-serif;
             --body-font: 'Plus Jakarta Sans', sans-serif;
             --transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+
+            /* Variables de diseño del Chat Web */
+            --chat-header-bg: #020e42;
+            --chat-window-bg: #ffffff;
+            --chat-bubble-user: #00bcd4;
+            --chat-bubble-ai: #f1f3f4;
+            --chat-text-ai: #333333;
+            --chat-text-user: #020e42;
         }
 
         /* --- VARIABLES MODO OSCURO --- */
@@ -45,6 +53,12 @@
             --card-bg: #242424;      /* Fondo de tarjetas oscuro */
             --border-color: #333;
             --feature-bg: rgba(0, 188, 212, 0.2);
+
+            /* Ajustes dinámicos de Chat para Modo Oscuro */
+            --chat-header-bg: #0a0a0f;
+            --chat-window-bg: #242424;
+            --chat-bubble-ai: #333333;
+            --chat-text-ai: #e0e0e0;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -255,8 +269,6 @@
             border-radius: 20px;
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
         }
-        body.dark-mode .about-image img { box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5); }
-        
         .about-text p { font-size: 1.1rem; margin-bottom: 30px; }
         .features { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
         .feature {
@@ -293,7 +305,6 @@
             border-color: var(--secondary-color);
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
         }
-        body.dark-mode .service-card:hover { box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4); }
 
         .service-icon-wrap {
             width: 80px; height: 80px; margin: 0 auto 25px;
@@ -460,7 +471,7 @@
                 <div class="about-text">
                     <span class="section-subtitle">Quiénes Somos</span>
                     <h3 style="font-size: 2.5rem; margin-bottom: 20px;">Innovación Digital a tu Alcance</h3>
-                    <p>Nacimos para potenciar tu negocio a través de la tecnología. Fusionamos creatividad, experiencia técnica y pasión por la calidad para entregar productos digitales de alto impacto que impulsan tu éxito empresarial en el mundo moderno.</p>
+                    <p>Nacimos para potenciar tu negocio a través de la tecnología. Fusionamos creatividad, experience técnica y pasión por la calidad para entregar productos digitales de alto impacto que impulsan tu éxito empresarial en el mundo moderno.</p>
                     <div class="features">
                         <div class="feature"><i class="fas fa-code"></i> Arquitectura a Medida</div>
                         <div class="feature"><i class="fas fa-users"></i> Equipo Experto</div>
@@ -637,13 +648,46 @@
         <i class="fab fa-whatsapp"></i>
     </a>
 
+
+    <div id="acmy-chat-root" style="position: fixed; bottom: 120px; right: 40px; z-index: 9999; font-family: var(--body-font);">
+        <button id="acmy-btn-trigger" style="width: 60px; height: 60px; border-radius: 50%; background: linear-gradient(45deg, #00bcd4, #00e5ff); color: #020e42; border: none; cursor: pointer; box-shadow: 0 4px 20px rgba(0, 188, 212, 0.4); font-size: 24px; display: flex; align-items: center; justify-content: center; outline: none; transition: var(--transition);">
+            <i class="fas fa-robot"></i>
+        </button>
+
+        <div id="acmy-window" style="display: none; width: 350px; height: 460px; background-color: var(--card-bg); border-radius: 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); flex-direction: column; position: absolute; bottom: 75px; right: 0; overflow: hidden; border: 1px solid var(--border-color); transition: background-color 0.5s ease;">
+            <div style="background-color: #020e42; color: #ffffff; padding: 15px; display: flex; align-items: center; justify-content: space-between;">
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <img src="img/LogoACMYS.png" onerror="this.style.display='none';" style="width: 30px; height: 30px; background: #fff; border-radius: 50%; padding: 2px;">
+                    <div>
+                        <strong style="display: block; font-size: 14px; font-family: var(--heading-font); color: #fff;">ACMYSistemas Asistente</strong>
+                        <span style="font-size: 11px; color: #00bcd4; font-weight: 600;">● Consultor Virtual Activo</span>
+                    </div>
+                </div>
+                <button id="acmy-btn-close" style="background: none; border: none; color: #ffffff; font-size: 22px; cursor: pointer; outline: none;">&times;</button>
+            </div>
+
+            <div id="acmy-chat-history" style="flex: 1; padding: 15px; overflow-y: auto; background-color: var(--accent-color); font-size: 13.5px; scroll-behavior: smooth; display: flex; flex-direction: column; gap: 12px; transition: background-color 0.5s ease;">
+                <div style="background-color: var(--chat-bubble-ai); color: var(--chat-text-ai); padding: 10px 14px; border-radius: 14px 14px 14px 0px; max-width: 85%; align-self: flex-start; box-shadow: 0 2px 5px rgba(0,0,0,0.03); border: 1px solid var(--border-color);">
+                    ¡Hola! Soy el asistente virtual de ACMYSistemas. Estoy listo para asesorarte en desarrollo de software, apps móviles, diseño web o marketing en Girardot. ¿Qué proyecto tienes en mente?
+                </div>
+            </div>
+
+            <div style="padding: 12px; display: flex; background-color: var(--card-bg); border-top: 1px solid var(--border-color); align-items: center; transition: background-color 0.5s ease;">
+                <input type="text" id="acmy-web-input" placeholder="Pregúntame sobre nuestros servicios..." style="flex: 1; padding: 10px 16px; border: 1px solid var(--border-color); border-radius: 24px; outline: none; font-size: 13px; background-color: var(--accent-color); color: var(--primary-color); transition: all 0.5s ease;">
+                <button id="acmy-web-send" style="background: linear-gradient(45deg, #00bcd4, #00e5ff); color: #020e42; border: none; width: 36px; height: 36px; margin-left: 8px; border-radius: 50%; cursor: pointer; font-size: 14px; display: flex; align-items: center; justify-content: center; font-weight: bold; outline: none; transition: var(--transition);">
+                    <i class="fas fa-paper-plane"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+
     <script>
         // 1. Lógica del Modo Oscuro
         const themeToggleBtn = document.getElementById('theme-toggle');
         const themeIcon = themeToggleBtn.querySelector('i');
         const body = document.body;
 
-        // Comprobar si hay preferencia guardada
         if (localStorage.getItem('dark-mode') === 'enabled') {
             body.classList.add('dark-mode');
             themeIcon.classList.remove('fa-moon');
@@ -685,14 +729,104 @@
             document.getElementById("scrollBar").style.width = scrolled + "%";
         }
 
-        // Listener consolidado para el scroll
         window.addEventListener("scroll", () => {
             reveal();
             updateScrollBar();
         });
 
-        // Llamada inicial
         reveal();
+
+
+        // ======= SECCIÓN INTEGRADA: LÓGICA DE JAVASCRIPT DEL CHATBOT =======
+        const acmyTrigger = document.getElementById('acmy-btn-trigger');
+        const acmyWindow = document.getElementById('acmy-window');
+        const acmyClose = document.getElementById('acmy-btn-close');
+        const acmySend = document.getElementById('acmy-web-send');
+        const acmyInput = document.getElementById('acmy-web-input');
+        const acmyHistory = document.getElementById('acmy-chat-history');
+
+        // Control de apertura/cierre de la ventana
+        acmyTrigger.onclick = () => {
+            const isHidden = acmyWindow.style.display === 'none';
+            acmyWindow.style.display = isHidden ? 'flex' : 'none';
+            if(isHidden) {
+                acmyTrigger.style.transform = "rotate(180deg)";
+                acmyInput.focus();
+            } else {
+                acmyTrigger.style.transform = "rotate(0deg)";
+            }
+        };
+        acmyClose.onclick = () => { 
+            acmyWindow.style.display = 'none'; 
+            acmyTrigger.style.transform = "rotate(0deg)";
+        };
+
+        // Renderizado semántico de mensajes
+        function appendWebMessage(texto, esUsuario) {
+            const msgNode = document.createElement('div');
+            msgNode.style.padding = "10px 14px";
+            msgNode.style.borderRadius = esUsuario ? "14px 14px 0px 14px" : "14px 14px 14px 0px";
+            msgNode.style.maxWidth = "85%";
+            msgNode.style.boxShadow = "0 1px 3px rgba(0,0,0,0.04)";
+            msgNode.style.border = "1px solid var(--border-color)";
+            msgNode.innerText = texto;
+
+            if (esUsuario) {
+                msgNode.style.backgroundColor = "rgba(0, 188, 212, 0.95)";
+                msgNode.style.color = "#020e42";
+                msgNode.style.alignSelf = "flex-end";
+            } else {
+                // Toma de manera limpia las variables dinámicas de tema de la hoja de estilos
+                msgNode.style.backgroundColor = "var(--card-bg)";
+                msgNode.style.color = "var(--text-color)";
+                msgNode.style.alignSelf = "flex-start";
+            }
+
+            acmyHistory.appendChild(msgNode);
+            acmyHistory.scrollTop = acmyHistory.scrollHeight;
+        }
+
+        // Despliegue asíncrono controlado hacia el middleware PHP
+        async function handleOutboundQuery() {
+            const queryText = acmyInput.value.trim();
+            if (!queryText) return;
+
+            appendWebMessage(queryText, true);
+            acmyInput.value = '';
+
+            // Bloque indicador de carga
+            const loader = document.createElement('div');
+            loader.id = "acmy-loader";
+            loader.style.color = "var(--text-color)";
+            loader.style.fontSize = "11.5px";
+            loader.style.fontStyle = "italic";
+            loader.style.paddingLeft = "5px";
+            loader.style.alignSelf = "flex-start";
+            loader.innerText = "ACMYSistemas Asistente está analizando...";
+            acmyHistory.appendChild(loader);
+            acmyHistory.scrollTop = acmyHistory.scrollHeight;
+
+            try {
+                const endpoint = await fetch('chat_acmy.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ mensaje: queryText })
+                });
+                const payload = await endpoint.json();
+                
+                const currentLoader = document.getElementById('acmy-loader');
+                if(currentLoader) currentLoader.remove();
+                
+                appendWebMessage(payload.respuesta, false);
+            } catch (fail) {
+                const currentLoader = document.getElementById('acmy-loader');
+                if(currentLoader) currentLoader.remove();
+                appendWebMessage("Disculpa, experimenté una latencia en la conexión. ¿Podrías repetir tu pregunta?", false);
+            }
+        }
+
+        acmySend.onclick = handleOutboundQuery;
+        acmyInput.onkeypress = (event) => { if (event.key === 'Enter') handleOutboundQuery(); };
     </script>
 </body>
 </html>
