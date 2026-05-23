@@ -737,7 +737,7 @@
         reveal();
 
 
-        // ======= SECCIÓN INTEGRADA: LÓGICA DE JAVASCRIPT DEL CHATBOT =======
+        // ======= SECCIÓN INTEGRADA: LÓGICA DE JAVASCRIPT DEL CHATBOT DIRECTO (GITHUB PAGES) =======
         const acmyTrigger = document.getElementById('acmy-btn-trigger');
         const acmyWindow = document.getElementById('acmy-window');
         const acmyClose = document.getElementById('acmy-btn-close');
@@ -763,6 +763,12 @@
 
         // Renderizado semántico de mensajes
         function appendWebMessage(texto, esUsuario) {
+            const wrapper = document.createElement('div');
+            wrapper.style.width = "100%";
+            wrapper.style.display = "flex";
+            wrapper.style.flexDirection = "column";
+            wrapper.style.marginBottom = "4px";
+
             const msgNode = document.createElement('div');
             msgNode.style.padding = "10px 14px";
             msgNode.style.borderRadius = esUsuario ? "14px 14px 0px 14px" : "14px 14px 14px 0px";
@@ -776,17 +782,17 @@
                 msgNode.style.color = "#020e42";
                 msgNode.style.alignSelf = "flex-end";
             } else {
-                // Toma de manera limpia las variables dinámicas de tema de la hoja de estilos
                 msgNode.style.backgroundColor = "var(--card-bg)";
                 msgNode.style.color = "var(--text-color)";
                 msgNode.style.alignSelf = "flex-start";
             }
 
-            acmyHistory.appendChild(msgNode);
+            wrapper.appendChild(msgNode);
+            acmyHistory.appendChild(wrapper);
             acmyHistory.scrollTop = acmyHistory.scrollHeight;
         }
 
-        // Despliegue asíncrono controlado hacia el middleware PHP
+        // Envío directo a la API de Google Gemini desde el navegador (Sin requerir PHP)
         async function handleOutboundQuery() {
             const queryText = acmyInput.value.trim();
             if (!queryText) return;
@@ -806,22 +812,56 @@
             acmyHistory.appendChild(loader);
             acmyHistory.scrollTop = acmyHistory.scrollHeight;
 
+            // PARÁMETROS GLOBALES DE ENLACE DE GEMINI DE ALTA VELOCIDAD
+            const apiKey = "AIzaSyApkgB39cezs9jp90hisy6-YWUb9ilbZFg";
+            const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-flash-lite:generateContent?key=${apiKey}`;
+
+            const contextoACMY = "Actúa como ACMYSistemas Asistente, el consultor técnico y comercial virtual de la firma ACMYSistemas en Girardot, Cundinamarca.\n\n" +
+                "CONOCIMIENTO INSTITUCIONAL:\n" +
+                "- Quiénes somos: Somos líderes en soluciones tecnológicas de vanguardia. Nacimos para potenciar negocios a través de la tecnología, fusionando creatividad, experiencia técnica y pasión por la calidad para entregar productos digitales de alto impacto que impulsan el éxito empresarial.\n" +
+                "- Ubicación base: Girardot - Cundinamarca, Colombia.\n" +
+                "- Pilares/Características: Arquitectura a medida, Equipo Experto, Soporte Estratégico y Alto Rendimiento.\n\n" +
+                "NUESTROS SERVICIOS:\n" +
+                "1. Desarrollo de Software: Sistemas robustos para optimizar y automatizar procesos operativos.\n" +
+                "2. Diseño Web: Sitios dinámicos, rápidos y atractivos que reflejan la identidad de marca perfectamente.\n" +
+                "3. Desarrollo Móvil: Aplicaciones nativas e híbridas intuitivas para iOS y Android.\n" +
+                "4. Marketing Digital: Estrategias que alínean objetivos comerciales.\n" +
+                "5. Diseño UX/UI: Productos funcionales, atractivos y centrados en el usuario.\n" +
+                "6. Consultoría IT: Asesoramiento especializado en tendencias y herramientas.\n\n" +
+                "CASOS DE ÉXITO:\n" +
+                "Software de Facturación, Clínica de Optometría, Consultorio Médico (Citas y Pacientes), Centro Dermatológico (Historias Clínicas), Clínica Odontológica (Odontogramas), Salud Ocupacional, Fonoaudiología, Aplicación Corporativa Nativa y App de Entregas (Delivery en tiempo real).\n\n" +
+                "CONTACTO:\n" +
+                "- WhatsApp: +57 313 480 72 12\n" +
+                "- Correo: acmysistemas@gmail.com\n\n" +
+                "DIRECTRIZ DE RESPUESTA: Responde siempre de forma muy corta, clara, amigable y profesional. Usa viñetas breves si te piden listar servicios. Responde la consulta usando este contexto: ";
+
+            const payload = {
+                contents: [{
+                    parts: [{ text: contextoACMY + queryText }]
+                }]
+            };
+
             try {
-                const endpoint = await fetch('chat_acmy.php', {
+                const response = await fetch(url, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ mensaje: queryText })
+                    body: JSON.stringify(payload)
                 });
-                const payload = await endpoint.json();
+                const data = await response.json();
                 
                 const currentLoader = document.getElementById('acmy-loader');
                 if(currentLoader) currentLoader.remove();
-                
-                appendWebMessage(payload.respuesta, false);
+
+                // Extraer de manera limpia la respuesta del JSON de Google
+                if (data.candidates && data.candidates[0].content.parts[0].text) {
+                    appendWebMessage(data.candidates[0].content.parts[0].text.trim(), false);
+                } else {
+                    appendWebMessage("Lo siento, no pude procesar la respuesta adecuadamente en este instante.", false);
+                }
             } catch (fail) {
                 const currentLoader = document.getElementById('acmy-loader');
                 if(currentLoader) currentLoader.remove();
-                appendWebMessage("Disculpa, experimenté una latencia en la conexión. ¿Podrías repetir tu pregunta?", false);
+                appendWebMessage("Disculpa, experimenté un inconveniente de red. ¿Podrías volver a intentarlo?", false);
             }
         }
 
